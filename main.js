@@ -1,11 +1,11 @@
 import {migrateData} from './migrateData.js'
 
-const CURRENT_VERSION = 0.002
+const CURRENT_VERSION = 0.003
 
 const PlayerStats = {
   // lvl data
   version: CURRENT_VERSION,
-  savedLevel: {levelIndex: 0, skinIndex: 1},
+  savedLevel: {levelIndex: 0, skinIndex: 1, partIndex: 1},
   userLevel: 1,
   hints: 3,
   // options
@@ -26,6 +26,7 @@ const dataFromServer = {
   version: 0.001,
   savedLevel: {levelIndex: 45, skinIndex: 4},
   userLevel: 91,
+  partIndex: 8,
   hints: 33,
   // options
   isPlayMusic: true,
@@ -41,24 +42,18 @@ const dataFromServer = {
 
 // тестовая дата, версии совпадают
 const updateData = {
-  "version": 0.002,
-  "savedLevel": {
-    "levelIndex": 45,
-    "skinIndex": 4,
-    "version": 0.002
-  },
-  "userLevel": 91,
-  "hints": 33,
-  "options": {
-    "isPlayMusic": true,
-    "isPlaySFX": true,
-    "isLight": false,
-    "isDebug": false
-  },
-  "timers": {
-    "version": 0.002
-  },
-  "hasAdPass": true
+  version: CURRENT_VERSION,
+  savedLevel: {levelIndex: 45, skinIndex: 4, partIndex: 8},
+  userLevel: 91,
+  hints: 33,
+  // options
+  isPlayMusic: false,
+  isPlaySFX: false,
+  isLight: false,
+  isDebug: false,
+  // features
+  timers: {},
+  hasAdPass: true,
 }
 
 const loadData = (data) => {
@@ -80,7 +75,7 @@ const loadData = (data) => {
   }
 }
 
-const playerData = loadData(updateData)
+const playerData = loadData(dataFromServer)
 console.log('playerData:', playerData)
 
 
