@@ -140,9 +140,7 @@ const version6 = {
   isTutorial_words: true,
   // new
   savedAt: '2025-06-22T14:31:03.255Z',
-  decor_lastRoomID: null,
-  userDecor: 0,
-  userCoins: 0,
+  playerId: null,
 }
 
 

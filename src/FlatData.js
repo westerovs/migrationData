@@ -1,10 +1,13 @@
 import {defaultData} from './defaultData.js'
 import {CURRENT_VERSION} from './testData.js'
+import {validateProfileFields} from './utils/utils.js'
 
 export default class FlatData {
   getData = (serverData) => {
-    Object.entries(serverData).forEach(([key, value]) => console.log(key, value))
-    console.log('')
+    // Object.entries(serverData).forEach(([key, value]) => console.log(key, value))
+    // console.log('')
+    validateProfileFields(serverData)
+    
     const data = {}
     
     this.#getFlatFields(data, serverData)
@@ -18,7 +21,6 @@ export default class FlatData {
     
     this.#applyDefaults(data)
     return {...defaultData, ...data}
-    // return data
   }
   
   #getFlatFields = (data, serverData) => {

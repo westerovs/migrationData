@@ -1,6 +1,7 @@
 import {CURRENT_VERSION} from './testData.js'
 
 const STORAGE_KEYS = {
+  version: 'version',
   userLevel: 'userLevel',
   hints: 'hints',
   hasAdPass: 'hasAdPass',
@@ -23,6 +24,8 @@ const STORAGE_KEYS = {
 }
 
 const defaultData = {
+  [STORAGE_KEYS.version]: CURRENT_VERSION,
+  
   [STORAGE_KEYS.userLevel]: 1,
   [STORAGE_KEYS.hints]: 3,
   [STORAGE_KEYS.hasAdPass]: false,
