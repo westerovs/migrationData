@@ -1,21 +1,24 @@
 import {defaultData} from './defaultData.js'
-
+import {CURRENT_VERSION} from './testData.js'
 
 export default class FlatData {
   getData = (serverData) => {
-    console.log('↓--------server Data--------↓')
     Object.entries(serverData).forEach(([key, value]) => console.log(key, value))
-    console.log('↑----------------↑')
     console.log('')
     const data = {}
     
-    // this.#getFlatFields(data, serverData)
+    this.#getFlatFields(data, serverData)
     this.#getOptions(data, serverData)
-    // this.#getSavedLevel(data, serverData)
-
-    // this.#applyDefaults(data, defaultData)
-    // return {...defaultData, ...data}
-    return data
+    this.#getSavedLevel(data, serverData)
+    this.#getTutorial(data, serverData)
+    this.#getTimers(data, serverData) // всегда сброшены в default, нет смысла хранить reward время при новой версии
+    
+    data.version = CURRENT_VERSION
+    data.savedAt = new Date().toISOString()
+    
+    this.#applyDefaults(data)
+    return {...defaultData, ...data}
+    // return data
   }
   
   #getFlatFields = (data, serverData) => {
@@ -27,11 +30,13 @@ export default class FlatData {
   }
   
   #getOptions = (data, serverData) => {
-    const options = serverData || serverData.options
-    if ('isPlayMusic' in options) data.option_isPlayMusic = options.isPlayMusic
-    if ('isPlaySFX' in options) data.option_isPlaySFX = options.isPlaySFX
-    if ('isLight' in options) data.option_isLight = options.isLight
-    if ('isDebug' in options) data.option_isDebug = options.isDebug
+    const options = serverData.options || serverData
+    if (!options) return
+    
+    data.option_isPlayMusic = this.#getSafeValue(options, 'isPlayMusic')
+    data.option_isPlaySFX = this.#getSafeValue(options, 'isPlaySFX')
+    data.option_isLight = this.#getSafeValue(options, 'isLight')
+    data.option_isDebug = this.#getSafeValue(options, 'isDebug')
   }
   
   #getSavedLevel = (data, serverData) => {
@@ -42,30 +47,27 @@ export default class FlatData {
     }
     
     // если в savedLevel не было partIndex, ищем в config (v 0.0004)
-    if (!('savedLevel_partIndex' in data) && 'config' in serverData && 'partIndex' in serverData.config) {
-      data.savedLevel_partIndex = serverData.config.partIndex
+    if (!('partIndex' in data) && 'config' in serverData && 'partIndex' in serverData.config) {
+      console.warn('partIndex взят из конфига')
+      data.partIndex = serverData.config.partIndex
     }
   }
   
   #getTimers = (data, serverData) => {
-    const timers = serverData.timers || {}
-    // if ('btnFree' in timers || TIMER_KEYS?.BTN_STORE_FREE in timers) {
-    //   data.timers_BTN_STORE_FREE = timers.btnFree ?? timers[TIMER_KEYS.BTN_STORE_FREE]
-    // }
-    // if ('btnHint' in timers || TIMER_KEYS?.BTN_HINT_REWARD_TIMER in timers) {
-    //   data.timers_BTN_HINT_REWARD_TIMER = timers.btnHint ?? timers[TIMER_KEYS.BTN_HINT_REWARD_TIMER]
-    // }
+    const timers = serverData.timers
+    if (!timers) return
+    if ('btnFree' in timers) data.timer_StoreBtnReward = timers.btnFree
+    if ('btnHint' in timers) data.timer_NoHintsPupUpBtnReward = timers.btnHint
   }
   
+  // появились в 0.0004 версии
   #getTutorial = (data, serverData) => {
-    const tutorials =
-      serverData.isTutorialCompleted ||
-      serverData.config?.isTutorialCompleted ||
-      {}
+    const tutorials = serverData.isTutorialCompleted || serverData.config?.isTutorialCompleted
+    if (!tutorials) return
     
-    if ('SHADOWS' in tutorials) data.isTutorialCompleted_SHADOWS = tutorials.SHADOWS
-    if ('WORDS' in tutorials) data.isTutorialCompleted_WORDS = tutorials.WORDS
-    if ('GENERATOR' in tutorials) data.isTutorialCompleted_GENERATOR = tutorials.GENERATOR
+    if ('generator' in tutorials) data.isTutorial_generator = tutorials.generator
+    if ('shadows' in tutorials) data.isTutorial_shadows = tutorials.shadows
+    if ('words' in tutorials) data.isTutorial_words = tutorials.words
   }
   
   // возвращает полю undefined, если оно не найдено
@@ -75,10 +77,10 @@ export default class FlatData {
   }
   
   // если у ключа значение undefined, ставит ему default параметр
-  #applyDefaults = (target, defaults) => {
-    for (const key in defaults) {
+  #applyDefaults = (target) => {
+    for (const key in defaultData) {
       if (!(key in target) || target[key] === undefined) {
-        target[key] = defaults[key]
+        target[key] = defaultData[key]
       }
     }
   }

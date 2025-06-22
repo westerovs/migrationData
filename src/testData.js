@@ -1,10 +1,9 @@
+const CURRENT_VERSION = 0.006
+// const TIMER_KEYS = {
+//   BTN_STORE_FREE: 'btnFree',
+//   BTN_HINT_REWARD_TIMER: 'btnHint',
+// }
 
-
-const CURRENT_VERSION = 0.0005
-const TIMER_KEYS = {
-  BTN_STORE_FREE: 'btnFree',
-  BTN_HINT_REWARD_TIMER: 'btnHint',
-}
 const LEVEL_TYPES = {
   DEFAULT: {name: 'default', difficulty: null},
   SHADOWS: {name: 'shadows', difficulty: 'hard'},
@@ -38,8 +37,8 @@ const version3 = {
   ],
   
   timers: {
-    [TIMER_KEYS.BTN_STORE_FREE]: null,
-    [TIMER_KEYS.BTN_HINT_REWARD_TIMER]: null,
+    btnFree: null,
+    btnHint: null,
   },
 }
 
@@ -60,8 +59,8 @@ const version3_5 = {
   isLight: true,
   
   timers: {
-    [TIMER_KEYS.BTN_STORE_FREE]: null,
-    [TIMER_KEYS.BTN_HINT_REWARD_TIMER]: null,
+    btnFree: null,
+    btnHint: null,
   },
 }
 
@@ -83,7 +82,7 @@ const version4 = {
   
   timers: {
     btnFree: 1745820438,
-    btnHint: 1744976733
+    btnHint: 9944976733
   },
   
   config: {
@@ -107,8 +106,8 @@ const version5 = {
     isDebug: false,
   },
   timers: {
-    [TIMER_KEYS.BTN_STORE_FREE]: null,
-    [TIMER_KEYS.BTN_HINT_REWARD_TIMER]: null,
+    btnFree: null,
+    btnHint: null,
   },
   isTutorialCompleted: {
     [LEVEL_TYPES.SHADOWS.name]: true,
@@ -117,12 +116,41 @@ const version5 = {
   },
 }
 
+const version6 = {
+  version: 0.005,
+  // flat
+  userLevel: 20,
+  hints: 8,
+  hasAdPass: true,
+  // lvl data
+  levelIndex: 13,
+  skinIndex: 1,
+  partIndex: 1,
+  // options
+  option_isPlayMusic: false,
+  option_isPlaySFX: false,
+  option_isLight: false,
+  option_isDebug: false,
+  // timers
+  timer_StoreBtnReward: null,
+  timer_NoHintsPupUpBtnReward: null,
+  // learning
+  isTutorial_generator: false,
+  isTutorial_shadows: true,
+  isTutorial_words: true,
+  // new
+  savedAt: '2025-06-22T14:31:03.255Z',
+  decor_lastRoomID: null,
+  userDecor: 0,
+  userCoins: 0,
+}
+
+
 export {
   version3,
   version3_5,
   version4,
   version5,
+  version6,
   CURRENT_VERSION,
-  TIMER_KEYS,
-  LEVEL_TYPES,
 }

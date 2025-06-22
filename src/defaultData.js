@@ -14,12 +14,12 @@ const STORAGE_KEYS = {
   option_isLight: 'option_isLight',
   option_isDebug: 'option_isDebug',
   
-  timer_btnStoreFree: 'timer_store_free',
-  timer_hint_reward: 'timer_hint_reward',
+  timer_StoreBtnReward: 'timer_StoreBtnReward',
+  timer_NoHintsPupUpBtnReward: 'timer_NoHintsPupUpBtnReward',
   
-  tutorial_completed_shadows: 'tutorial_completed_shadows',
-  tutorial_completed_words: 'tutorial_completed_words',
-  tutorial_completed_generator: 'tutorial_completed_generator'
+  isTutorial_generator: 'isTutorial_generator',
+  isTutorial_words: 'isTutorial_words',
+  isTutorial_shadows: 'isTutorial_shadows',
 }
 
 const defaultData = {
@@ -36,14 +36,19 @@ const defaultData = {
   [STORAGE_KEYS.option_isLight]: true,
   [STORAGE_KEYS.option_isDebug]: false,
   
-  // [STORAGE_KEYS.timer_store_free]: null,
-  // [STORAGE_KEYS.timer_hint_reward]: null,
-  //
-  // [STORAGE_KEYS.tutorial_completed_shadows]: false,
-  // [STORAGE_KEYS.tutorial_completed_words]: false,
-  // [STORAGE_KEYS.tutorial_completed_generator]: false
+  [STORAGE_KEYS.timer_StoreBtnReward]: null,
+  [STORAGE_KEYS.timer_NoHintsPupUpBtnReward]: null,
+
+  [STORAGE_KEYS.isTutorial_generator]: false,
+  [STORAGE_KEYS.isTutorial_shadows]: false,
+  [STORAGE_KEYS.isTutorial_words]: false,
+  
+  // new
+  playerId: null,
+  savedAt: null, // дата последнего сохранения
 }
 
 export {
+  STORAGE_KEYS,
   defaultData
 }
