@@ -95,15 +95,15 @@ const version4 = {
 const version5 = {
   version: 0.0005,
   // lvl data
-  userLevel: 1,
-  hints: 3,
-  hasAdPass: false,
+  userLevel: 661,
+  hints: 43,
+  hasAdPass: true,
   
-  savedLevel: {levelIndex: 0, skinIndex: 1, partIndex: 1},
+  savedLevel: {levelIndex: 40, skinIndex: 31, partIndex: 13},
   options: {
-    isPlayMusic: true,
-    isPlaySFX: true,
-    isLight: true,
+    isPlayMusic: false,
+    isPlaySFX: false,
+    isLight: false,
     isDebug: false,
   },
   timers: {
@@ -111,9 +111,9 @@ const version5 = {
     [TIMER_KEYS.BTN_HINT_REWARD_TIMER]: null,
   },
   isTutorialCompleted: {
-    [LEVEL_TYPES.SHADOWS.name]: false,
-    [LEVEL_TYPES.WORDS.name]: false,
-    [LEVEL_TYPES.GENERATOR.name]: false,
+    [LEVEL_TYPES.SHADOWS.name]: true,
+    [LEVEL_TYPES.WORDS.name]: true,
+    [LEVEL_TYPES.GENERATOR.name]: true,
   },
 }
 
