@@ -2,6 +2,10 @@ import {defaultData} from './defaultData.js'
 import {CURRENT_VERSION} from './testData.js'
 import {validateProfileFields} from './utils/utils.js'
 
+/*
+* Класс переводит в плоскую структуру сложные данные, вне зависимости от версий игры.
+* */
+
 export default class FlatData {
   getData = (serverData) => {
     // Object.entries(serverData).forEach(([key, value]) => console.log(key, value))
