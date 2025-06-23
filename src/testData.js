@@ -22,7 +22,7 @@ const version3 = {
   
   // options
   isPlayMusic: false,
-  isPlaySFX: true,
+  isPlaySfx: true,
   isDebug: false,
   
   // features
@@ -54,7 +54,7 @@ const version3_5 = {
   
   // options
   isPlayMusic: false,
-  isPlaySFX: true,
+  isPlaySfx: true,
   isDebug: false,
   isLight: true,
   
@@ -101,7 +101,7 @@ const version5 = {
   savedLevel: {levelIndex: 40, skinIndex: 31, partIndex: 13},
   options: {
     isPlayMusic: false,
-    isPlaySFX: false,
+    isPlaySfx: false,
     isLight: false,
     isDebug: false,
   },
@@ -117,7 +117,7 @@ const version5 = {
 }
 
 const version6 = {
-  version: 0.005,
+  version: 0.006,
   // flat
   userLevel: 20,
   hints: 8,
@@ -140,9 +140,29 @@ const version6 = {
   isTutorial_words: true,
   // new
   savedAt: '2025-06-22T14:31:03.255Z',
-  playerId: null,
+  playerId: 777444222,
 }
 
+const yandexVersion = {
+  'version': 0.0005,
+  'userLevel': 6,
+  'hints': 7,
+  'hasAdPass': true,
+  'levelIndex': 0,
+  'skinIndex': 1,
+  'partIndex': 1,
+  'option_isPlayMusic': false,
+  'option_isPlaySFX': false,
+  'option_isLight': false,
+  'option_isDebug': false,
+  'timer_StoreBtnReward': null,
+  'timer_NoHintsPupUpBtnReward': null,
+  'isTutorial_generator': false,
+  'isTutorial_shadows': false,
+  'isTutorial_words': false,
+  'playerId': 'j+UJYGMJEgVdGO9clWRRnyOXY93+dEe9tgKORJdcG2Y=',
+  'savedAt': '2025-06-23T02:12:12.753Z'
+}
 
 export {
   version3,
@@ -151,4 +171,5 @@ export {
   version5,
   version6,
   CURRENT_VERSION,
+  yandexVersion
 }

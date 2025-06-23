@@ -8,8 +8,9 @@ import {validateProfileFields} from './utils/utils.js'
 
 export default class FlatData {
   getData = (serverData) => {
-    // Object.entries(serverData).forEach(([key, value]) => console.log(key, value))
-    // console.log('')
+    console.log('----------- serverData -------------')
+    Object.entries(serverData).forEach(([key, value]) => console.log(key, value))
+    console.log('')
     validateProfileFields(serverData)
     
     const data = {}
@@ -25,6 +26,7 @@ export default class FlatData {
     
     this.#applyDefaults(data)
     return {...defaultData, ...data}
+    // return data
   }
   
   #getFlatFields = (data, serverData) => {
@@ -36,45 +38,92 @@ export default class FlatData {
   }
   
   #getOptions = (data, serverData) => {
-    const options = serverData.options || serverData
-    if (!options) return
+    // old
+    if (serverData.options) {
+      data.option_isPlayMusic = this.#getSafeValue(serverData.options, 'isPlayMusic')
+      data.option_isPlaySFX = this.#getSafeValue(serverData.options, 'isPlaySfx')
+      data.option_isLight = this.#getSafeValue(serverData.options, 'isLight')
+      data.option_isDebug = this.#getSafeValue(serverData.options, 'isDebug')
+    }
     
-    data.option_isPlayMusic = this.#getSafeValue(options, 'isPlayMusic')
-    data.option_isPlaySFX = this.#getSafeValue(options, 'isPlaySFX')
-    data.option_isLight = this.#getSafeValue(options, 'isLight')
-    data.option_isDebug = this.#getSafeValue(options, 'isDebug')
+    // old
+    if ('isPlayMusic' in serverData) data.option_isPlayMusic = serverData.isPlayMusic
+    if ('isPlaySfx' in serverData) data.option_isPlaySFX = serverData.isPlaySfx
+    if ('isLight' in serverData) data.option_isLight = serverData.isLight
+    if ('isDebug' in serverData) data.option_isDebug = serverData.isDebug
+    
+    // new
+    if ('option_isPlayMusic' in serverData) data.option_isPlayMusic = serverData.option_isPlayMusic
+    if ('option_isPlaySFX' in serverData) data.option_isPlaySFX = serverData.option_isPlaySFX
+    if ('option_isLight' in serverData) data.option_isLight = serverData.option_isLight
+    if ('option_isDebug' in serverData) data.option_isDebug = serverData.option_isDebug
   }
   
   #getSavedLevel = (data, serverData) => {
+    // old
     if (serverData.savedLevel && typeof serverData.savedLevel === 'object') {
       data.levelIndex = this.#getSafeValue(serverData.savedLevel, 'levelIndex')
       data.skinIndex  = this.#getSafeValue(serverData.savedLevel, 'skinIndex')
       data.partIndex  = this.#getSafeValue(serverData.savedLevel, 'partIndex')
     }
     
-    // если в savedLevel не было partIndex, ищем в config (v 0.0004)
-    if (!('partIndex' in data) && 'config' in serverData && 'partIndex' in serverData.config) {
-      console.warn('partIndex взят из конфига')
+    // old (плоская структура, без вложенности)
+    if ('levelIndex' in serverData) data.levelIndex = serverData.levelIndex
+    if ('skinIndex' in serverData) data.skinIndex = serverData.skinIndex
+    if ('partIndex' in serverData) data.partIndex = serverData.partIndex
+    
+    // new (явные префиксы, если поменяется структура)
+    if ('savedLevel_levelIndex' in serverData) data.levelIndex = serverData.savedLevel_levelIndex
+    if ('savedLevel_skinIndex' in serverData) data.skinIndex = serverData.savedLevel_skinIndex
+    if ('savedLevel_partIndex' in serverData) data.partIndex = serverData.savedLevel_partIndex
+    
+    // v0.0004
+    if (serverData.config) {
       data.partIndex = serverData.config.partIndex
     }
   }
   
   #getTimers = (data, serverData) => {
-    const timers = serverData.timers
-    if (!timers) return
-    if ('btnFree' in timers) data.timer_StoreBtnReward = timers.btnFree
-    if ('btnHint' in timers) data.timer_NoHintsPupUpBtnReward = timers.btnHint
+    // old (вложенная структура timers)
+    if (serverData.timers) {
+      if ('btnFree' in serverData.timers) data.timer_StoreBtnReward = serverData.timers.btnFree
+      if ('btnHint' in serverData.timers) data.timer_NoHintsPupUpBtnReward = serverData.timers.btnHint
+      return
+    }
+    
+    // old (плоская структура)
+    if ('btnFree' in serverData) data.timer_StoreBtnReward = serverData.btnFree
+    if ('btnHint' in serverData) data.timer_NoHintsPupUpBtnReward = serverData.btnHint
+    
+    // new (явные префиксы в плоской структуре)
+    if ('timer_StoreBtnReward' in serverData) data.timer_StoreBtnReward = serverData.timer_StoreBtnReward
+    if ('timer_NoHintsPupUpBtnReward' in serverData) data.timer_NoHintsPupUpBtnReward = serverData.timer_NoHintsPupUpBtnReward
   }
-  
+
   // появились в 0.0004 версии
   #getTutorial = (data, serverData) => {
-    const tutorials = serverData.isTutorialCompleted || serverData.config?.isTutorialCompleted
-    if (!tutorials) return
+    // old (вложенная структура)
+    if (serverData.isTutorialCompleted) {
+      if ('generator' in serverData.isTutorialCompleted) data.isTutorial_generator = serverData.isTutorialCompleted.generator
+      if ('shadows' in serverData.isTutorialCompleted) data.isTutorial_shadows = serverData.isTutorialCompleted.shadows
+      if ('words' in serverData.isTutorialCompleted) data.isTutorial_words = serverData.isTutorialCompleted.words
+      return
+    }
     
-    if ('generator' in tutorials) data.isTutorial_generator = tutorials.generator
-    if ('shadows' in tutorials) data.isTutorial_shadows = tutorials.shadows
-    if ('words' in tutorials) data.isTutorial_words = tutorials.words
+    // old (вложенная структура в конфиге)
+    if (serverData.config?.isTutorialCompleted) {
+      if ('generator' in serverData.config.isTutorialCompleted) data.isTutorial_generator = serverData.config.isTutorialCompleted.generator
+      if ('shadows' in serverData.config.isTutorialCompleted) data.isTutorial_shadows = serverData.config.isTutorialCompleted.shadows
+      if ('words' in serverData.config.isTutorialCompleted) data.isTutorial_words = serverData.config.isTutorialCompleted.words
+      return
+    }
+    
+    // new (явная плоская структура)
+    if ('isTutorial_generator' in serverData) data.isTutorial_generator = serverData.isTutorial_generator
+    if ('isTutorial_shadows' in serverData) data.isTutorial_shadows = serverData.isTutorial_shadows
+    if ('isTutorial_words' in serverData) data.isTutorial_words = serverData.isTutorial_words
   }
+
   
   // возвращает полю undefined, если оно не найдено
   #getSafeValue = (obj, key) => {

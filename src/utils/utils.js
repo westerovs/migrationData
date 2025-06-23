@@ -27,7 +27,7 @@ const validateProfileFields = (serverData) => {
   defaultKeys.forEach(key => {
     if (!profileKeys.includes(key)) {
       isOk = false
-      console.error(`[FlatData] ❌ Required field is missing in serverData: ${key}`)
+      console.warn(`[FlatData] ❌ Required field: ${key}`)
     }
   })
   
@@ -35,7 +35,7 @@ const validateProfileFields = (serverData) => {
   profileKeys.forEach(key => {
     if (!defaultKeys.includes(key)) {
       isOk = false
-      console.error(`[FlatData] ⚠️ Unknown or extra field found in serverData: ${key}`)
+      console.warn(`[FlatData] ⚠️ Unknown field: ${key}`)
     }
   })
   

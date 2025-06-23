@@ -21,35 +21,39 @@ const STORAGE_KEYS = {
   isTutorial_generator: 'isTutorial_generator',
   isTutorial_words: 'isTutorial_words',
   isTutorial_shadows: 'isTutorial_shadows',
+  playerId: 'playerId',
+  savedAt: 'savedAt'
 }
+
 
 const defaultData = {
-  [STORAGE_KEYS.version]: CURRENT_VERSION,
+  [STORAGE_KEYS.version]: '------------- default 0.006',
   
-  [STORAGE_KEYS.userLevel]: 1,
-  [STORAGE_KEYS.hints]: 3,
-  [STORAGE_KEYS.hasAdPass]: false,
+  [STORAGE_KEYS.userLevel]: '------------- default 0',
+  [STORAGE_KEYS.hints]: '------------- default 3',
+  [STORAGE_KEYS.hasAdPass]: '------------- default false',
   
-  [STORAGE_KEYS.levelIndex]: 0,
-  [STORAGE_KEYS.skinIndex]: 1,
-  [STORAGE_KEYS.partIndex]: 1,
+  [STORAGE_KEYS.levelIndex]: '------------- default 0',
+  [STORAGE_KEYS.skinIndex]: '------------- default 1',
+  [STORAGE_KEYS.partIndex]: '------------- default 1',
   
-  [STORAGE_KEYS.option_isPlayMusic]: true,
-  [STORAGE_KEYS.option_isPlaySFX]: true,
-  [STORAGE_KEYS.option_isLight]: true,
-  [STORAGE_KEYS.option_isDebug]: false,
+  [STORAGE_KEYS.option_isPlayMusic]: '------------- default true',
+  [STORAGE_KEYS.option_isPlaySFX]: '------------- default true',
+  [STORAGE_KEYS.option_isLight]: '------------- default true',
+  [STORAGE_KEYS.option_isDebug]: '------------- default false',
   
-  [STORAGE_KEYS.timer_StoreBtnReward]: null,
-  [STORAGE_KEYS.timer_NoHintsPupUpBtnReward]: null,
-
-  [STORAGE_KEYS.isTutorial_generator]: false,
-  [STORAGE_KEYS.isTutorial_shadows]: false,
-  [STORAGE_KEYS.isTutorial_words]: false,
+  [STORAGE_KEYS.timer_StoreBtnReward]: '------------- default null',
+  [STORAGE_KEYS.timer_NoHintsPupUpBtnReward]: '------------- default null',
+  
+  [STORAGE_KEYS.isTutorial_generator]: '------------- default false',
+  [STORAGE_KEYS.isTutorial_shadows]: '------------- default false',
+  [STORAGE_KEYS.isTutorial_words]: '------------- default false',
   
   // new
-  playerId: null,
-  savedAt: null, // дата последнего сохранения
+  [STORAGE_KEYS.playerId]: '------------- default null',
+  [STORAGE_KEYS.savedAt]: '------------- default null',
 }
+
 
 export {
   STORAGE_KEYS,
